@@ -1,0 +1,145 @@
+#### STAT 405/705 FALL 2019 ASSIGNMENT 5 (Monte Carlo)
+#### NAME:
+
+#### If in a question I refer to a function that we have not seen in class, 
+#### then use the help facility to find out about it.
+#### Insert your answers under each question.
+#### Submit your solutions to Canvas as a plain text file.
+#### If a question asks for output, don't just include a "print" statement that creates the output,
+#### also include the output itself. 
+
+
+# The town of Hungerville has come onto the radar of a company that offers meal delivery from restaurants. 
+# It uses cyclists for these deliveries.
+# Hungerville is an interesting town because it is laid out in a perfect city grid and has exactly 
+# 24 blocks in both the north and east directions. Roads going north-south are called Avenues,
+# and roads east-west are called streets.
+# Meal pickups and deliveries can be viewed as only happening at street intersections.
+# This means that every cyclist's, restaurant's and customer's location can be represented as a pair (i,j),
+# i for the street they are on, and j for the avenue, where both i and j take integer values between 1 and 24.
+# The city planners used the convention that the intersection at the south west corner of the grid is (1,1)
+# and the intersection in the north east corner is (24,24).
+
+# For now, all cyclists are assumed to cycle at the same speed, and can travel one block in one minute.
+# Note that operationally, the company waits for a meal to be ready, before identifying and dispatching a cyclist to pick it up.
+
+#Q1. (4pts.) Write a function to return the distance in city blocks (not, as the crow flies) between a cyclist and a restaurant.
+# The function should take two inputs (each a vector of length 2), the cyclist's location and the restaurant's location.
+# Call the function "distance" ("dist" is already taken).
+# Paste your function below and print its output when called on the pair bicyclist.location  = (3,7) and restaurant.location = (8,3).
+
+#Q2. (8 pts.) Write a function called "newcyclist" that creates a new delivery cyclist. 
+# A "new cyclist" is just a list. This list has named elements as follows:
+# BID: a unique identifier for the cyclist.
+# Location: the coordinates of the cyclist's current location.
+# Status: a text string.
+# Destination: the coordinates/address of the customer to whom the meal will be delivered.
+# OID: the id of the order that the cyclist will pickup.
+# Speed: the speed of the cyclist in blocks per minute. 
+# Your function will need to take 6 arguments, one for each component of the list. 
+# Even though the arguments will typically take on their default values, by incorporating these arguments
+# you give the user the opportunity of overwriting the default values.
+
+# By default, have Location set to a random intersection and Status set to "Waiting".   Set OID = NULL 
+# and Destination = NULL. Think of NULL as a placeholder for something that is currently empty/not set.
+# Don't put quotes around the NULL. Like NA, it is special value in the R language.
+# Default the speed to 1.
+# A lazy way of creating a very likely unique BID would be paste(sample(c(LETTERS,0:9),10),sep="",collapse="").
+
+# Paste your newcyclist function below and show what happens when you call it with all default arguments; that is when you
+# run the command "newcyclist()".
+
+# By way of illustration, here's what my version of the function, called "newcyclist", outputs when called with all default values:
+# newcyclist()
+# $`BID`
+# [1] "XC3QARUJET"
+
+# $Location
+# [1] 15  3
+
+# $Status
+# [1] "Waiting"
+
+# $Destination
+# NULL
+
+# $OID
+# NULL
+
+# $Speed
+# [1] 1
+
+#Q3. (7 pts.) Write a function that creates a new meal order and call this function "neworder". An order is again a list, but with these four named elements:
+# OID: a unique identifier for the order.
+# WaitTime: an integer that records how long the meal has been waiting for pick-up, in minutes.
+# Restaurant: A list with two elements; the name and location of the restaurant at which the order originates. 
+# Destination: the coordinates of the customer who has made the order.
+
+# By default, have WaitTime set to 0. 
+# By default, have the function randomly choose (with equal probability) a restaurant from the restaurant list
+# which you can find in the "restaurants.Rdata" file.
+# Default the destination to a random grid point.
+# You can create the OID with the same paste(sample(c(LETTERS,0:9),10),sep="",collapse="" ) code as before.
+
+# Paste your function below and show what happens when you call it with all default arguments, that is when you
+# run the command "neworder()".
+
+#Q4 (5 pts.) 
+###### Set the random seed to your birthday number and include this code in your answer.
+# Create two lists, one of 20 cyclists and the other of 20 orders.
+# Show the code you use to create the cyclist and passenger lists but you don't have to print the lists out. 
+# The command "replicate" can be used to make these lists but read the help carefully to make sure you return
+# a list and not an array. (Do not use a for loop for this question if you want full points!) 
+
+#Q5 (5 pts.) Create a matrix that contains the initial distance between each cyclist and each restaurant order location.  
+# (use your Q1 function to do the distance calculation). Here, you can use nested for loops.
+# Show the code you use to do this and print out and paste the distance matrix below. 
+ 
+#Q6 (4 pts.) Focusing now on just cyclist 1, identify which order is closest to them and how long it
+# will take for the order to be picked up. If there is a tie, take the first order.
+# Show the code that you used to do this and paste both the closest order OID and the time until pick-up below.
+
+##################################################################################
+# More generally you need to assign cyclists to all orders in an optimal fashion. 
+# In Operations Research this is called the "Assignment Problem".
+# There is a package for R called "lpSolve" which solves the assignment problem.
+# Install the lpSolve package.
+# Once installed use "library(lpSolve)" to make the package available to R.
+# If your distance matrix in Q5 is called distmat, you assign cyclists to orders in an optimal fashion with the command
+# fm <- lp.assign(distmat)
+# Now fm$solution gives you a matrix that shows which cyclist was assigned to each order.
+# In addition, fm$objval gives you the *total* waiting time for this optimal allocation. 
+
+#Q7 (10 pts.) Run a Monte Carlo simulation with 1000 replications that estimates  
+# the *average* waiting time that orders experience prior to pickup under the optimal allocation.
+# It's useful to realize that waiting time will just be equal to the initial distance 
+# between the cyclist and the waiting order, because of the assumption that a cyclist can only go one block in one minute.
+# For each iteration generate a new set of 20 cyclists and a new set of 20 orders.
+# Show your simulation code together with the average waiting time that is obtained.
+# Be careful with the names of the iterators in the for loops. Don't accidentally reuse them!
+
+#Q8 (7 pts.) Redo the Monte Carlo simulation in Q7 to estimate the probability that at least one 
+# of the 20 orders arrives at its destination before the last of the 20 
+# orders is picked up. 
+# This event occurs if the minimum total journey time (pick-up time + delivery) 
+# is less than the maximum pick-up time.
+# To obtain the pick-up times for the optimal allocation of cyclists to orders,
+# you may want to examine and manipulate the elementwise product matrix "fm$solution * distmat".  
+# It may also be useful to write a helper function that takes an order as input and returns
+# the journey time between the restaurant and the final destination.
+# You can then "sapply" this function to the order list to get the times from restaurant to destination.
+
+# Occasionally  you will create an order whose restaurant location and final destination are the same.
+# (That's like living above the restaurant!)
+# Treat this as an error with the app used for ordering the meal -- that is, it will still wait to be picked up,
+# but delivered immediately so the time between pickup and delivery is 0. In other words,you don't have to write any
+# extra code to deal with this special situation. 
+
+# Provide code for both the simulation and print and paste the actual result.
+
+
+
+
+
+
+

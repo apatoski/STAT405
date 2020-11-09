@@ -1,0 +1,118 @@
+#### STAT 705 SPRING 2019 ASSIGNMENT 4 (Iteration)
+#### NAME:
+
+#### If in a question I refer to a function that we have not seen in class, 
+#### then use the help facility to find out about it.
+#### Insert your answers under each question.
+#### Submit your solutions to Canvas as a plain text file.
+
+# Q1. The probability of a "player advantage" signal in a card counting system
+# The card counting system does not care about the cards' suit (hearts/clubs/diamonds/spades), 
+# only their values
+
+#### Use the playing cards generated in class:
+CARDS <- paste(
+rep(c("ACE","2","3","4","5","6","7","8","9","10","J","Q","K"),rep(4,13)),
+rep(c("H","C","D","S"),13),sep="_")
+
+# and the "sample" command to shuffle the deck of cards.
+set.seed(20190214)
+my.deck <- sample(CARDS)
+
+#The "map" that takes the card value to its count is
+
+#{ACE => -1, 
+# 2   => +1, 
+# 3   => +1, 
+# 4   => +1, 
+# 5   => +1, 
+# 6   => +1, 
+# 7   =>  0, 
+# 8   =>  0, 
+# 9   =>  0,
+#10   => -1,
+# J   => -1,
+# Q   => -1,
+# K   => -1}
+
+# Here are the card values in a vector
+cardvalues <- c("ACE","2","3","4","5","6","7","8","9","10","J","Q","K")
+# Here are the card counts in a vector
+cardcounts <- c(-1,1,1,1,1,1,0,0,0,-1,-1,-1,-1)
+
+#a. Replace the card representation with the card value.
+#   For example "ACE_H" becomes "ACE", "2_S" becomes "2", "8_H" becomes "8".
+#   Use the "gsub" function to do this. Hint: you can match anything after the "_" character with the ".*" construct.
+
+# Paste your substitution code and show that it works with the my.deck shuffled deck by pasting its card values.
+
+
+#b. Replace the card values from part 1a with their card counts. The "match" command is very useful to achieve this.
+# The two vectors, cardvalues and cardcounts defined above will also help. 
+
+# Paste your code that maps the card values to their counts (no "for" loops accepted)
+
+#c For a card counting system to be useful in practice, it needs to be able to
+# generate "player advantage" signals reasonably frequently. If it only generates an "advantage" signal
+# once every 1000 shuffled decks, it will not be very useful in practice.
+
+# Define an "advantage" signal happening if the cumulative card count in the deck rises strictly above 7.
+# Use a Monte Carlo simulation with a replication size of 100,000, to estimate the probability that a
+# randomly shuffled card deck generates an "advantage" signal within the first 30 played cards.
+# Between each iteration of the simulation make sure you re-shuffle the deck.
+# You will find the command "cumsum" very helpful in this task. "cumsum" calculates a cumulative sum of a vector,
+# which is exactly what the cumulative card count is.
+
+# Cut and paste your code that performs the Monte Carlo simulation together with the estimated probability
+  
+
+# Q2. Data manipulations. Use the "new.outpatient" data frame to answer these questions. 
+# The code to create it is available in the class 8 case study slides.
+# You can also modify the code that is available on the class 8 slides if you want, to help answer these questions.
+  
+# Paste the R code that you write to answer each question as well as the answer itself.
+
+#a. In which month were the most number of appointments scheduled for? (Extract the month from the POSIXlt data structure).
+
+#b. In which month is the No Show rate in the new.outpatient data frame the highest? 
+
+#c. Which patient has seen the most different specialities, in the least number of visits?
+#   Use the "Dept" variable and include the most recent visit (the "order" command can be useful here).
+#   How many different specialities did they see and in how many visits? 
+#   (I suggest you modify the "extract.hist" function from class 8 adding a new variable Num.Specialties to the date frame). 
+
+#d. Of those patients that had a prior no-show rate of above 30%, what proportion were men, and what proportion were women? 
+#   Compare this to the sex breakout for all patients.
+#   Note that in the numeric representation of the Sex variable, 1 is Female and 2 Male. 
+
+
+
+# Q3. Influence of points on a regression. For loops. 
+# Use the PRSM dataset to answer this question.
+# Paste the R code that you wrote to answer each part as well as the answer itself.
+
+#a. Create a new column in the data frame called PRSM.score defined as 
+#   2 * (Amt.Repaid.at.6.Months/Total.Amt.to.be.Repaid)
+
+#b. Run the simple regression of PRSM against FICO and report the R^2.
+
+#c. Remove each point in turn from the dataset and rerun the regression. Which data point's removal makes RMSE for the PRSM against FICO regression increase the most?
+# Hint: the subset command to lm will be useful here.
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+

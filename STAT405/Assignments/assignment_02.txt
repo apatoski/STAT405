@@ -1,0 +1,126 @@
+#### STAT 705 Spring 2019 ASSIGNMENT 2
+#### NAME:
+
+#### If in a question I refer to a function that we have not seen in class, 
+#### then use the help facility to find out about it.
+#### Insert your answers under each question.
+#### Submit your solutions to Canvas as a plain text file.
+
+#### Download the .Rdata file called "hw2_2019.Rdata" available on Canvas and read it in to R using R-studio.
+#### This will bring all the objects you need for the homework straight into R-studio.
+
+
+#### Q1. (6pts. )You will have imported a list called "mystery.list".
+#a.  Inspect the list and describe briefly in words what is in it.
+#    BIGCITY is defined as a city with more than 1,000,000 residents, and CAN.SKI is a logical that 
+#    refers to whether there are any ski resorts.
+
+
+#b. Use two different R syntaxes for extracting *just* the state population of Pennsylvania
+(not the sub-list containing the population).
+
+#b(i)
+
+#b(ii)
+
+#c The capital for California is incorrect. It should be Sacramento. Write code to correct this mistake in the list and then print the corrected list.
+
+#d Write code to add the state of Florida to the list along with its relevant attributes, and print just this new 
+#  element of the updated list (if you don't know the attributes, just look them up on-line!)
+
+
+#### Q2 (20pts.)
+
+#a. What is a key difference between a matrix and a data frame?
+
+# You will have read in a data frame called  "nvda.df" which contains information on the price of NVIDIA stock for 2018.
+
+#b How many rows and columns does this data frame have? (Write code to extract the answer).
+
+#c On which day of the year was NVIDIA's closing stock price the lowest? Show your code that identifies the day. 
+#  The function "which.min" can be very useful.
+
+#d Create and add to the data frame a new column called "Return" that calculates the daily relative return
+#  of NVIDIA stock. The Daily Return is defined as (price today - price yesterday)/price yesterday.
+#  I suggest that you build this vector outside of the data frame, and when complete, "cbind" it into the 
+#  data frame. The first element in this "return" vector will have to be an NA (without quotes) because there is no preceding day for it.
+#  Provide your code that builds the return vector and the code that adds it back into the data frame.
+#  There are many ways to create this vector of returns, but you may want to have a look at the "diff" function 
+#  as an elegant way to perform the calculation. Use the "head" function to print the first 5 rows of the data frame
+#  that now includes the Return variable.
+
+#e. What was NVIDIA's average daily return over this time period? To deal with the NA, use the "na.rm" 
+#   argument to the "mean" function.
+
+#f. What was the standard deviation of NVIDIA's daily return over this time period?
+
+#g. There is a column in the data frame called "DayOfWeek". It has been entered numerically, 1 for Sunday etc.
+#   Turn "DayOfWeek" into an *unordered* factor and overwrite the old DayOfWeek variable in the data frame.
+#   Show your code that creates and inserts the factor day-of-week variable.
+
+#h. The "by" command is useful for summarizing one variable over the levels of a categorical/factor variable. 
+#   Read about the "by" command using R's help function.
+
+#   Using the "by" command, find which Day of the week had the lowest average daily return for NVIDIA stock.
+#   Because the mean  for Tuesday will be NA due to the first day of the year return being NA in the data frame, you will need to pass
+#   the "na.rm = TRUE" argument into the mean function when "by" applies it.
+#   In the function syntax:
+#   by(data, INDICES, FUN, ..., simplify = TRUE)
+#   the three dots "..." is a special slot where you can pass in arguments to the function FUN. 
+#   This will allow you to find the mean daily return for Tuesday too. 
+#   You need to write code to find the worst day-of-the-week and then extract the mean return in the worst day-of-the-week.   
+
+#   Code:
+#   Worst day-of-the-week:
+#   Average return in worst day-of-the-week:
+
+
+#### Q3 Regression (12pts.) 
+
+#a  Using the nvda.df data frame, run a regression of NVIDIA returns 
+#   against daily volume and store the resulting *summary* of the regression as a variable.
+
+#b  Write code to extract the slope and intercept, RMSE and R^2 from the regression summary.
+#   Note that the RMSE is named "sigma" in the summary regression output. 
+
+#c  Now add in the categorical variable, DayOfWeek, to the regression. Is Day of Week, in the presence of the
+#   daily volume, a statistically significant predictor of NVIDIA's return? 
+#   You can use the "anova" command on the result you saved in part 3a, to obtain the p-value for the test.   
+#   Show the code  you used to generate the relevant output to answer the question, 
+#   as well as your conclusion (which you can just add in as a comment).
+
+#d  Finally, include in the regression the interaction between Volume and Day of Week. 
+#   Is this interaction  term statistically significant? Again, post your code and state a conclusion.
+
+
+
+#### The lapply function
+#### Q4. (12pts.) you will have read in a list called "gala.list". It contains the text based responses 
+#### to a survey question that asked individuals what they liked "least" about a gala event.
+#### The names in the list are respondent IDs (coerced to characters) and the associated element is the text response.
+
+#a. Using the "lapply" command and "unlist" command, write R code to find
+#   which respondent wrote the most number of words in their answer. Recall that "strsplit" will split a character string
+#   and the "length" command will count how many elements there are in a vector. The command "which.max" will identify
+#   the maximum element in a vector. Hint: you need to recognise that "strsplit" itself returns a list structure.
+#   To get things started, lapply(gala.list,strsplit," ") breaks each respondent's answer into distinct words
+#   There are alternative approaches to doing this question, but I want you to use lapply.
+
+#b. Briefly explain what each step in the code you wrote for part (a) does.  In particular, describe the 
+#   data structure (vector, matrix, list, etc.) returned by each function you call.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,94 @@
+#### STAT 405/705 SPRING 2019 ASSIGNMENT 3 (Functions)
+#### NAME:
+
+#### If in a question I refer to a function that we have not seen in class, 
+#### then use the help facility to find out about it.
+#### Insert your answers under each question.
+#### IMPORTANT: Submit your solutions to Canvas as a plain text file.
+
+#### OBJECTIVE: in this homework you will build a set of functions that can be used
+#### to automatically log transform the highly positively skewed columns in a data frame.
+
+#### Use the ".Rdata" file called "PRSM.Rdata" as a test case to answer these questions.
+#### Some students will already be familiar with this dataset. Familiarity is not required to
+#### answer the following questions. For those that are interested, background to the data set
+#### can be found in the file on Canvas called: "PRSM_introduction.pdf".
+
+#### In this assignment you do NOT have to worry about missing values (NAs).
+#### There is no need to accommodate NAs in your functions.
+
+
+#### Q1. When fitting regression models (lm or glm) skewed predictor (x-variables) can give rise to highly leveraged
+#### data points which may dominate the regression. One approach to dealing with this problem is to transform the
+#### skewed x-variables.
+
+#a.  Write a function in R that takes a single numeric vector argument, and finds the skewness of the vector.
+# The definition of skewness we will use is in the document "skewness.pdf" on Canvas.
+# Call your function "skewness" and cut and paste your function here.
+# As a test case skewness(c(1:10,100)) should report 3.255638. 
+
+
+#b. Use your skewness function with the following vector and report the result:
+
+my.vec <- c(0.917, -0.734,  0.001, -0.846, -0.233,  0.385,  0.847,  0.455)
+
+
+#c. Refine your skewness function, so that if it is called with anything other than a numeric argument
+# it stops and produces an informative error message. Use the "if", "is.numeric" and "stop" functions to achieve this goal.
+# Cut and paste your refined function here.
+
+
+#### Q2. Write a function called "is.non.negative" that takes a numeric vector of data and reports if all of the values are greater
+#### than or equal to zero. It should return either a TRUE or FALSE. You can use the R-functions "if" and "min" to help here.
+
+#a. Cut and paste your function here.
+
+
+#b Write a function called "skew.transform" that takes a numerical vector input (x), and if the input is both
+# non-negative AND highly skewed, it returns the natural log of the input vector.
+# If the input, x, doesn't satisfy both these conditions then skew.transform should just return x itself. 
+# The function should have two arguments in addition to x, each with default values.
+# The first additional argument should be called "thresh" which takes a single non-negative numeric value.
+# Default its value to 2.0.
+# The role of "thresh" is so that the user can decide for themselves the cut-off level of skewness at which they will transform. 
+# The second additional argument should be called "offset" which accepts a single non-negative numeric value.
+# Default its value to 1.
+# The offset argument will be added to the entire input vector before the log is taken. The reason for this is  
+# that the log of 0 is -Infinity, so that the role of the offset is to add a positive constant to the data 
+# prior to the log transform. This way, there will be no -Infinity results.  
+# Note that the constant is added to every element in the vector, not just those with a zero value.
+
+# Paste your "skew.transform" function here:
+
+
+#c For the PRSM data set calculate mean(skew.transform(PRSM$Years.In.Business)) and paste the result below.
+
+
+#### Q3. In this question you will apply the "skew.transform" function to the non-negative numeric columns of the PRSM data frame.
+#### You can identify the numeric columns with the built in R command "is.numeric".
+#### You will have to use either the "lapply" or "sapply" command on the data frame to identify and then extract the numeric columns.
+#### If you try to use "apply", apply will first coerce the data frame to a matrix, which can
+#### only contain one variable type, which will be character, so is.numeric would report
+#### all FALSE which is not what you want.
+
+#a  Extract just the numeric columns into their own new data frame, called PRSM.num
+#   Paste the code that you used for the extraction.
+
+#b. Paste code to apply the default version of the skew.transform function to the PRSM.num data frame. 
+#   You must use the apply command, no looping allowed. Save the transformed data frame as "PRSM.skew.correct". 
+
+#c. Paste code to apply the skew.transform to the PRSM.num data frame with the 
+#   arguments set to thresh = 2.5 and offset = 0.5. Again, you must use the apply command, no looping allowed.
+
+#d. Using the argument values given in part 3c, what is the mean of "Current.Delinquent.Credit.Lines" for the transformed data?
+
+
+
+ 
+
+
+
+
+
+
+
